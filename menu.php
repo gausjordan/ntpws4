@@ -13,8 +13,7 @@
 			if ( isset($_SESSION['user']['valid']) && $_SESSION['user']['valid'] == TRUE ) {
 				echo '
 					<li><a href="index.php?menu=8">Admin</a></li>
-					<li><a href="index.php?menu=9">Sign Out</a></li>
-					<h1> This shit. </h1>';
+					<li><a href="index.php?menu=9">Sign Out</a></li>';
 
 			} else {
 				echo '
