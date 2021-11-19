@@ -4,6 +4,7 @@
 
 	$sleep_seconds = 3;
 
+	
     echo '
         <h1>Sign-in</h1>
         <div id = "signin">
@@ -53,16 +54,18 @@
 			# Vracamo se na signin.php, s tim da ce iz druge zbog postavljenog flag-a propasti dalje
 			# echo '<h1>Welcome, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'];
 			
-			echo '<h2>Log-in failed. Please try again in <span id="vrijednost">' . $sleep_seconds . '</span> seconds.</h2>';
-			echo '	<script>';
-			echo '		var t = ' . $sleep_seconds . ';';
-			echo '		function countDown() {';
-			echo '			document.getElementById("vrijednost").innerHTML = t.toFixed(1);';
-			echo '		t -= 0.1;';
-			echo '		if (t === -1) { clearInterval(funkcija); }';
-			echo '		};';
-			echo '		let funkcija = setInterval(countDown, 100);';
-			echo '	</script>';
+			echo '<h2>Wrong username or password. Please try again in <span id="vrijednost">' . $sleep_seconds . '</span> seconds.</h2>';
+			echo '
+			<script>
+				var t = ' . $sleep_seconds . ';
+				function countDown() {
+					document.getElementById("vrijednost").innerHTML = t.toFixed(1);
+				t -= 0.1;
+				if (t === -1) { clearInterval(funkcija); }
+				};
+				let funkcija = setInterval(countDown, 100);
+			</script>
+			';
 
 			header("Refresh:" . $sleep_seconds . "; url=index.php?menu=7");
 			# $_SESSION['message'] = '<p>You\'ve entered wrong email or password!</p>';
