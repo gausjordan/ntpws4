@@ -4,12 +4,13 @@
     
     echo '
         <h1>Sign-in</h1>
-        <h2>We don\'t have any cybersec specialists... Good luck.</h2>
         <div id = "signin">
     ';
 
-    if ($_POST['_sent_'] == FALSE) {
+    if (isset($_POST['_sent_']) == FALSE || $_POST['_sent_'] == FALSE) {
+		
 		echo '
+			<h2>We don\'t have any cybersec specialists... Good luck.</h2>
             <form action="" name="loginForm" id="loginForm" method="POST">
                 <input type="hidden" id="_sent_" name="_sent_" value="TRUE">
 
@@ -22,7 +23,7 @@
                 <input type="submit" value="Sign in"><br>
             </form>';
 	}
-	else if ($_POST['_sent_'] == TRUE) {
+	else if (isset($_POST['_sent_']) == TRUE && !isset($_SESSION['success'])) {
 		$query  = "SELECT * FROM users";
 		$query .= " WHERE username='" .  $_POST['username'] . "'";
         $result = @mysqli_query($MySQL, $query);
@@ -34,16 +35,39 @@
 			$_SESSION['user']['firstname'] = $row['firstname'];
 			$_SESSION['user']['lastname'] = $row['lastname'];
 			$_SESSION['message'] = '<p>Welcome, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'] . '</p>';
-            # Redirect to admin website
-			# header("Location: index.php?menu=8");
+            
+			# Redirect to admin website
+			$_SESSION['success'] = 'true';
+			# Vracamo se na signin.php, s tim da ce iz druge zbog postavljenog flag-a propasti dalje
+			# header("Location: index.php?menu=7");
+			
 		}
 		
 		# Failure
 		else {
 			unset($_SESSION['user']['lastname']);
-			$_SESSION['message'] = '<p>You\'ve entered wrong email or password!</p>';
-			# header("Location: index.php?menu=6");
+			$_SESSION['success'] = 'false';
+			# Vracamo se na signin.php, s tim da ce iz druge zbog postavljenog flag-a propasti dalje
+			# header("Location: index.php?menu=7");
+
+			# $_SESSION['message'] = '<p>You\'ve entered wrong email or password!</p>';
+			# header("Location: index.php?menu=7");
 		}
+	}
+
+	if ($_SESSION['success'] == FALSE) {
+		unset($_SESSION['success']);
+		echo '<h1>Sases.<h1>';
+		#sleep(1);
+		#header("Location: index.php?menu=2");
+		
+
+	}
+	else {
+		unset($_SESSION['success']);
+		echo '<h1>Fail<h1>';
+		#sleep(1);
+		#header("Location: index.php?menu=3");
 	}
 	
     echo '</div>';
