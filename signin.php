@@ -35,40 +35,59 @@
 		$row = @mysqli_fetch_array($result, MYSQLI_ASSOC);
 		
 		if (password_verify($_POST['password'], $row['password'])) {
-			$_SESSION['user']['valid'] = 'true';
-			$_SESSION['user']['id'] = $row['id'];
-			$_SESSION['user']['firstname'] = $row['firstname'];
-			$_SESSION['user']['lastname'] = $row['lastname'];
-			$_SESSION['user']['role'] = $row['role'];
-			$_SESSION['message'] = 'Welcome to EcoPick®, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'];
-            
-			# Redirect to admin website
 
-			header("Location: index.php?menu=1");
+			if ($row['archive'] == 'N') {
+				$_SESSION['user']['valid'] = 'true';
+				$_SESSION['user']['id'] = $row['id'];
+				$_SESSION['user']['firstname'] = $row['firstname'];
+				$_SESSION['user']['lastname'] = $row['lastname'];
+				$_SESSION['user']['role'] = $row['role'];
+				$_SESSION['message'] = 'Welcome to EcoPick®, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'];
+				header("Location: index.php?menu=1");
+			}
+
+			else {
+			
+				$tempname = $row['firstname'] . ' ' . $row['lastname'];
+				unset($_SESSION['user']['lastname']);
+				echo '<h2>' . $tempname . ', ';
+				echo 'your account has yet to be approved by the administrator.<br><br>You will be redirected to homepage in <span id="vrijednost">' . $sleep_seconds+2 . '</span> seconds.</h2>';
+				echo '
+				<script>
+					var t = ' . $sleep_seconds+2 . ';
+					function countDown() {
+						document.getElementById("vrijednost").innerHTML = t.toFixed(1);
+						t -= 0.1;
+						if (t === -1) { clearInterval(funkcija); }
+					};
+					let funkcija = setInterval(countDown, 100);
+				</script>
+				';
+				header("Refresh:" . $sleep_seconds+2 . "; url=index.php?menu=1");
+
+			}
 
 		}
 		
 		# Failure
 		else {
 			unset($_SESSION['user']['lastname']);
-			# Vracamo se na signin.php, s tim da ce iz druge zbog postavljenog flag-a propasti dalje
 			
-			
-			echo '<h2>Wrong username or password. Please try again in <span id="vrijednost">' . $sleep_seconds . '</span> seconds.</h2>';
+			echo '<h2>Wrong username or password.<br><br>Please try again in <span id="vrijednost">' . $sleep_seconds . '</span> seconds.</h2>';
 			echo '
 			<script>
 				var t = ' . $sleep_seconds . ';
 				function countDown() {
 					document.getElementById("vrijednost").innerHTML = t.toFixed(1);
-				t -= 0.1;
-				if (t === -1) { clearInterval(funkcija); }
+					t -= 0.1;
+					if (t === -1) { clearInterval(funkcija); }
 				};
 				let funkcija = setInterval(countDown, 100);
 			</script>
 			';
 
 			header("Refresh:" . $sleep_seconds . "; url=index.php?menu=7");
-			# $_SESSION['message'] = '<p>You\'ve entered wrong email or password!</p>';
+			
 		}
 	}
 

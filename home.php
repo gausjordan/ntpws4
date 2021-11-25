@@ -9,9 +9,6 @@
 		}
 	echo '</h1>';
 
-	# DEBUG
-	echo "<h1>Evo ga:" . $_SESSION['user']['role'] . "</h1>";
-
     echo '
 		<h2>The World\'s leading reusable toothpick supplier</h2>
 		<figure>
