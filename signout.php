@@ -9,6 +9,7 @@
 	session_unset();
 
 	header("Location: index.php?menu=1");
+	
 	exit;
 	
 ?>

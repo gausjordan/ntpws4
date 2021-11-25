@@ -72,6 +72,9 @@
 					case 9:
 						include("signout.php");
 						break;
+					case 10:
+						include("addnews.php");
+						break;
 				}
 			}
 			

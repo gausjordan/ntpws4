@@ -58,9 +58,12 @@ li a:hover {
 }
 
 main {
-	margin-top: 0em;
+	/* margin-top: 0em;
 	margin-left: 2em;
-	margin-right: 2em;
+	margin-right: 2em; */
+	margin: 0 auto;
+	padding: 0em 2em;
+	max-width: 1400px;
 }
 
 h1, h2 {
@@ -96,10 +99,12 @@ figure {
 	margin: 0 1em 1.5em 1em;
 	float: left;
 	border-radius: 10px;
-	width: 40%;
-	max-width: 400px;
+	width: 30%;
+	max-width: 320px;
 	border: 2px dotted black;
 	min-width: 180px;
+	text-align: center;
+	min-height: 250px;
 }
 
 figure img {
@@ -115,7 +120,9 @@ footer {
 	background-color: #333;
 	padding: 0.1em;
 	clear: both;
+	margin-top: 2em;
 }
+
 footer p {
 	color: white;
 	text-align: center;
@@ -178,6 +185,11 @@ input[type=text], input[type=email], select, textarea, #register input, #signin 
 	font-size: 95%;
 }
 
+small {
+	color: green;
+	font-weight: bold;
+}
+
 input[type=submit] {
     display: block;
 	background-color: #4CAF50;
@@ -201,11 +213,13 @@ label {
 
 #aboutUs video {
 	float: left;
-	margin: 1em;
+	margin: 1em 1em 4em 1em;
 }
 
 
-@media only screen and (max-width: 720px) {
+
+
+@media only screen and (max-width: 920px) {
 
 	.cover-image {
 		background-image: url("img/Meni-i-header-pozadina2.jpg");
@@ -234,7 +248,7 @@ label {
 	header ul {
 		position: left;
 		bottom:0px;
-		display: block;
+		display: inline-block;
 		border-width:4px;
 		border-style: groove none groove none;
 		margin-bottom: 1em;
@@ -244,14 +258,25 @@ label {
 
 	header li {
 		display: inline-block;
-		width: 100%;
+		width: 50%;
 	}
 
 	li a {
-		background-color: rgba(184, 98, 98, 0.815);
+		background-color: rgba(184, 98, 98, 0.615);
+		text-align: left;
 	}
+
+	header li:nth-of-type(odd):last-of-type {
+		color: red;
+		width: 100%;
+		text-align: left;
+	}
+
 	
 	li a:hover {
 	  background-color: rgba(17, 17, 17, 0.85);
 	}
+
+
+
 }

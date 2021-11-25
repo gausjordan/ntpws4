@@ -11,9 +11,17 @@
 				<li><a href="index.php?menu=5">Gallery</a></li>';
 				
 			if ( isset($_SESSION['user']['valid']) && $_SESSION['user']['valid'] == TRUE ) {
-				echo '
-					<li><a href="index.php?menu=8">Admin</a></li>
-					<li><a href="index.php?menu=9">Sign Out</a></li>';
+
+				echo '<li><a href="index.php?menu=10">Add News</a></li>';
+
+					switch($_SESSION['user']['role']) {
+						case 1:
+							echo '<li><a href="index.php?menu=8">Admin</a></li>';
+							break;
+					}
+
+				echo '<li><a href="index.php?menu=9">Sign Out</a></li>';
+
 
 			} else {
 				echo '

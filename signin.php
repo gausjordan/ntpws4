@@ -28,7 +28,7 @@
                 <input type="submit" value="Sign in"><br>
             </form>';
 	}
-	else if (isset($_POST['_sent_']) == TRUE && !isset($_SESSION['success'])) {
+	else if (isset($_POST['_sent_']) == TRUE ) {
 		$query  = "SELECT * FROM users";
 		$query .= " WHERE username='" .  $_POST['username'] . "'";
         $result = @mysqli_query($MySQL, $query);
@@ -39,20 +39,20 @@
 			$_SESSION['user']['id'] = $row['id'];
 			$_SESSION['user']['firstname'] = $row['firstname'];
 			$_SESSION['user']['lastname'] = $row['lastname'];
-			$_SESSION['message'] = '<p>Welcome, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'] . '</p>';
+			$_SESSION['user']['role'] = $row['role'];
+			$_SESSION['message'] = 'Welcome to EcoPick®, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'];
             
 			# Redirect to admin website
-			$_SESSION['success'] = True;
-			# Vracamo se na signin.php, s tim da ce iz druge zbog postavljenog flag-a propasti dalje
-			header("Location: index.php?menu=7");
+
+			header("Location: index.php?menu=1");
+
 		}
 		
 		# Failure
 		else {
 			unset($_SESSION['user']['lastname']);
-			$_SESSION['success'] = False;
 			# Vracamo se na signin.php, s tim da ce iz druge zbog postavljenog flag-a propasti dalje
-			# echo '<h1>Welcome, ' . $_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname'];
+			
 			
 			echo '<h2>Wrong username or password. Please try again in <span id="vrijednost">' . $sleep_seconds . '</span> seconds.</h2>';
 			echo '
@@ -69,19 +69,6 @@
 
 			header("Refresh:" . $sleep_seconds . "; url=index.php?menu=7");
 			# $_SESSION['message'] = '<p>You\'ve entered wrong email or password!</p>';
-		}
-	}
-
-	else {
-		if ($_SESSION['success'] == TRUE) {
-			unset($_SESSION['success']);
-			header("Location: index.php?menu=1");
-		}
-	
-	
-		else {
-			unset($_SESSION['success']);
-			header("Location: index.php?menu=1");
 		}
 	}
 

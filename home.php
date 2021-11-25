@@ -1,7 +1,18 @@
 <?php
 
+	echo '<h1>';
+		if (isset($_SESSION['message'])) {
+			echo $_SESSION['message'];
+		}
+		else {
+			echo 'Welcome to EcoPick®';
+		}
+	echo '</h1>';
+
+	# DEBUG
+	echo "<h1>Evo ga:" . $_SESSION['user']['role'] . "</h1>";
+
     echo '
-		<h1>Welcome to EcoPick®</h1>
 		<h2>The World\'s leading reusable toothpick supplier</h2>
 		<figure>
 			<img src="img/slika1.jpg" alt="Reusable pick with a bowl of fruits" title="Reusable pick with a bowl of fruits" class="inLineSlika" style="content: \'\'; clear: both">
