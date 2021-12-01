@@ -1,6 +1,6 @@
 <?php
 
-	echo '<h1>';
+	echo '<div id="home"><h1>';
 		if (isset($_SESSION['message'])) {
 			echo $_SESSION['message'];
 		}
@@ -25,4 +25,5 @@
 			<a href="https://instagram.com" target="_blank"><img src="img/instagram-512.webp" alt="Instagram" title="Instagram" style="width:32px; margin-top:0.4em"></a>
 		</p>
     ';
+	echo '</div>';
 ?>

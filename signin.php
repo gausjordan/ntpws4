@@ -7,7 +7,7 @@
 	
     echo '
         <h1>Sign-in</h1>
-        <div id = "signin">
+        <div id="signin">
     ';
 
     if ( isset($_POST['_sent_']) == FALSE && !isset($_SESSION['success'])) {

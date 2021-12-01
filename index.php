@@ -75,6 +75,12 @@
 					case 10:
 						include("addnews.php");
 						break;
+					case 11:
+						include("editnews.php");
+						break;
+					case 12:
+						include("newsdetails.php");
+						break;
 				}
 			}
 			

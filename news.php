@@ -1,28 +1,81 @@
 <?php
+
+	session_start();
+	define('__Dinamo__', TRUE);
+	include("dbconn.php");
+
+	if ( isset($_POST['_publishtoggle_']) ) {
+		$query = "UPDATE news SET approved = 'Y' WHERE id = " . $_POST['idvijesti'];
+		$result = @mysqli_query($MySQL, $query);
+	}
+	if ( isset($_POST['_unpublishtoggle_']) ) {
+		$query = "UPDATE news SET approved = 'N' WHERE id = " . $_POST['idvijesti'];
+		$result = @mysqli_query($MySQL, $query);
+	}
+	if ( isset($_POST['_deletenews_']) ) {
+		$query = "DELETE FROM news WHERE id = " . $_POST['idvijesti'];
+		$result = @mysqli_query($MySQL, $query);
+	}
+
+
+	$query  = "SELECT news.id, title, summary, firstname, lastname, published, source, image1, approved FROM news INNER JOIN users ON news.author_id=users.id";
+    $result = @mysqli_query($MySQL, $query);
+	$row = @mysqli_fetch_array($result, MYSQLI_ASSOC);
+	
 	echo '
 		<h1>News</h1>
-		<div class="news">
-			<a href="news-3.html"><img src="news-img/news-3.jpg" alt="Tooth picks expected to be &#39;All the rage&#39; in 2022!" title="Tooth picks expected to be &#39;All the rage&#39; in 2022!"></a>
-			<h2>Tooth picks expected to be &#39;All the rage&#39; in 2022!</h2>
-			<p>Latest study performed by the Bhainsdehi University of arts and sciences show a clear trend towards high-end toothpick adoption. <a href="news-3.html">More ...</a></p>
-			<p><time datetime="2021-10-21">21 October 2021</time></p>
-			
-			<hr>
-			
-			<a href="news-2.html"><img src="news-img/news-2.jpg" alt="Gil Hibben joins the EcoPick engineering team" title="Gil Hibben joins the EcoPick engineering team"></a>
-			<h2>Gil Hibben joins the EcoPick engineering team</h2>
-			<p>Gil Hibben (born <time datetime="1935-07-04">September 4, 1935</time>), a famous American custom knifemaker from Wyoming, known for his cinematic cutlery work, joins forces with EcoPick to build the toughest, most stylish pick as of yet. <a href="news-2.html">More ...</a></p>
-			<p><time datetime="2021-10-22">22 October 2021</time></p>
+		<div id="news">
+		';
 
-			<hr>
+	foreach ($result as $r) {
 
-			<a href="news-1.html"><img src="news-img/news-1.jpg" alt="There is no spoon, it would appear." title="There is no spoon, it would appear."></a>
-			<h2>There is no spoon</h2>
-			<p>There really isn&#39;t. A 39 year old tourist from Jesenice, Slovenia, found himself shocked in awe, as he experienced a true-to-life matrixian epiphany - straight from the Ethos!<a href="news-1.html">More ...</a></p>
-			<p><time datetime="2021-10-23">23 October 2021</time></p>
-			<hr>
+		if ($r['approved'] == 'N') {
+			$identifikator = "_publishtoggle_";
+			$tekst = "Publish";
+		} else {
+			$identifikator = "_unpublishtoggle_";
+			$tekst = "Un-publish";
+		}
 
-		</div>
-	</main>
-	';
+		echo '
+			<div class="flex-container">
+				<div class="flex-item">
+					<img src="/newspics/' . $r['image1'] . '">
+					<p>Author: ' . $r['firstname'] . ' ' . $r['lastname'] . '</p>
+					<p>Date: ' . $r['published'] . '</p>
+				</div>
+				<div class="flex-item flex-big-item">
+					<h2><a href="index.php?menu=12&newsid=' . $r['id'] . '">' . $r['title'] . '</a></h2>
+					<p>' . $r['summary'] . '...
+					<a href="index.php?menu=12&newsid=' . $r['id'] . '">More</a></p>
+					<p>Source: ' . $r['source']. '</p>
+				</div>
+				<div class="flex-item">
+					<h3>Admin menu</h3>
+					
+					<form action="index.php?menu=2" id="publishingtoggle" name="publishingtoggle" method="POST">
+						<input type="hidden" id="' . $identifikator . '" name="' . $identifikator . '" value="TRUE">
+						<input type="hidden" id="idvijesti" name="idvijesti" value="' . $r['id'] . '">
+						<input type="submit" value="' . $tekst . '"><br>
+					</form>
+
+					<form action="index.php?menu=11" id="editnews" name="editnews" method="POST">
+						<input type="hidden" id="_editnews_" name="_editnews_" value="TRUE">
+						<input type="hidden" id="idvijesti" name="idvijesti" value="' . $r['id'] . '">
+						<input type="submit" value="Edit"><br>
+					</form>
+
+					<form action="index.php?menu=2" id="deletenews" name="deletenews" method="POST">
+						<input type="hidden" id="_deletenews_" name="_deletenews_" value="TRUE">
+						<input type="hidden" id="idvijesti" name="idvijesti" value="' . $r['id'] . '">
+						<input type="submit" value="Delete"><br>
+					</form>
+				</div>
+			</div>
+		';
+	};
+	
+	echo '</div>';
+	echo '</main>';
+	
 ?>

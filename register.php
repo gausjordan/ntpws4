@@ -5,7 +5,7 @@
     echo '
     <h1>Registration form</h1>
     <h2>At EcoPick®, we really don\'t respect your privacy.</h2>
-    <div id = "register">
+    <div id="register">
     ';
     
     # Ako smo prvi puta ovdje odnosno _sent_ nije podesen, prikazuje se forma.
