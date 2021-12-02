@@ -34,7 +34,9 @@
 
 		echo '
 			<header>
-				<div class="cover-image"></div>
+				<div class="cover-image">';
+					include("api.php");
+		echo'	</div>
 				<nav>';
 					include("menu.php");
 		echo '	</nav>

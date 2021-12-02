@@ -311,6 +311,33 @@ label {
 	text-decoration: none;
 }
 
+#weatherblock {
+	position: relative;
+	margin: 1em;
+	display: inline-block;
+	height: 40%;
+	background-color: #00000060;
+	padding: 2em 2em 2em 2em;
+	text-align: center;
+	border-radius: 20px;
+}
+
+#weatherblock img {
+	position: relative;
+	height: 50%;
+	width: 100%;
+	object-fit: contain;        
+}
+
+#weatherblock h3 {
+	color: white;
+	font-size: small;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+}
+
+
+
 
 @media only screen and (max-width: 920px) {
 
