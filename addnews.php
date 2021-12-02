@@ -3,7 +3,7 @@
 	# Mjesto za sve prenesene slike
 	$uploaddir = 'newspics/';
 	
-	# Provjerava sto to korisnik uploada
+	# Funkcija koja provjerava sto to korisnik uploada
 	function fileCheck($uploadedFile, &$uploadFailed, &$txtlog) {
 		global $uploaddir;
 		$uploadfile = $uploaddir . basename($_FILES[$uploadedFile]['name']);
@@ -34,6 +34,7 @@
 		}
 	}
 
+	# Ako prvi put otvaramo stranicu (još ništa nismo submitali kroz formu) krećemo ovdje
 	if (isset($_POST['_sent_'])==false) {
 
 		echo '
@@ -66,6 +67,7 @@
 		';
 	}
 
+	# Ako smo primili podatke kroz POST, nastavljamo od tu
 	else {
 		
 		if ($_FILES['image_ul1']['name'] != "") {

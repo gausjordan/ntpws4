@@ -269,6 +269,48 @@ label {
 	display: block;
 }
 
+#admin th {
+	text-align: left;
+}
+
+#admin table input, select {
+	width: 96%;
+}
+
+#admin table input[type=submit] {
+	width: 96%;
+	display: block;
+	background-color: white;
+	border: 1px solid silver;
+	color: black;
+	padding: 12px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 1em;
+}
+
+#admin table #resetbutton {
+	width: 55%;
+	display: block;
+	background-color: white;
+	border: 1px solid silver;
+	color: black;
+	padding: 12px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 0.60em;
+	text-align: center;
+}
+
+#admin table #resetbutton:hover {
+	background-color: gray;
+	color: white;
+}
+
+#admin table a:hover {
+	text-decoration: none;
+}
+
 
 @media only screen and (max-width: 920px) {
 

@@ -4,39 +4,37 @@
     define('__Dinamo__', TRUE);
     include("dbconn.php");
 
-	echo '<style>
-	
-	#admin th {
-		text-align: left;
-	}
-
-	#admin table input, select {
-		width: 96%;
-	}
-
-	#admin table input[type=submit] {
-		width: 96%;
-		display: block;
-		background-color: white;
-		border: 1px solid silver;
-		color: black;
-		padding: 12px 20px;
-		border-radius: 4px;
-		cursor: pointer;
-		margin-bottom: 1em;
-	}
-
-	#admin table input[type=submit]:hover {
-		background-color: gray;
-		color: white;
-	}
-
-	</style>';
-
-
 	echo '
 		<div id="admin">';
 
+			# Sigurnosna provjera, vrti se u svakoj situaciji
+			if ($_SESSION['user']['valid'] != 'true' || $_SESSION['user']['role'] != 1) {
+				echo '<h1>You are not authorized to view this page.</h1>';
+				exit;
+			}
+
+			# Ako smo iz admin panela odabrali reset lozinke za korisnika izvrsava se samo ovaj mali blok
+			if (isset($_GET['resetflag'])) {
+				
+				# Generator nasumičnog passworda
+				$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+				$pass = array();
+				$alphaLength = strlen($alphabet) - 1;
+				for ($i = 0; $i < 8; $i++) {
+					$n = rand(0, $alphaLength);
+					$pass[] = $alphabet[$n];
+				}
+				$newpass = implode($pass);
+				$pass_hash = password_hash($newpass, PASSWORD_DEFAULT, ['cost' => 12]);
+
+				$query = "UPDATE users SET password=\"" . $pass_hash . "\" WHERE id=" . $_GET['resetflag'];
+				$result = @mysqli_query($MySQL, $query);
+
+				echo '<h1>New password is <tt>' . $newpass . '</tt></h1>';
+				exit;
+			}
+
+			# Pocetna tocka
 			if (isset($_POST['_sent_'])==false) {
 				
 				$query  = "SELECT * FROM users";
@@ -72,7 +70,8 @@
 											<input type="text" id="username" name="person['.$r['id'].'][username]" pattern=".{4,20}" value="' . $r['username'] . '" required><br>
 										</td>
 										<td>
-											<input type="submit" value="Reset">
+											<a href="index.php?menu=8&resetflag='.$r['id'].'"><div id="resetbutton">Reset</div></a>
+											<!--<input type="submit" value="Reset"> -->
 										</td>
 										<td>
 											<select name="person['.$r['id'].'][role]" id="role">';
@@ -122,23 +121,16 @@
 			}
 			else {
 				
+				# Neucinkovito provodjenje odvojenog SQL upita za svakog korisnika jer sam lijen
 				foreach ($_POST['person'] as $r) {
 					$query = "";
 					$query = "UPDATE users SET firstname=\"" . $r['firstname'] . "\", lastname=\"" . $r['lastname'] . "\", username=\"" . $r['username'];
 					$query .= "\", role=" . $r['role'] . ", archive='" . $r['activation'] . "' WHERE id=" . $r['_userid_'];
 					$result = mysqli_query($MySQL, $query);
+					header("Refresh: 0; url=index.php?menu=8");
 				}
 
-				header("Refresh: 0; url=index.php?menu=8");
-
 			}
-
-
-
-
-
-
-
 
 		echo '</div>
 	';
