@@ -114,8 +114,8 @@
 		}
 
         $query = "UPDATE news SET title='" . $_POST['newstitle'] . "', ";
-        $query .= "summary = '" . $_POST['teaser'] . "', ";
-        $query .= "full_text = '" . $_POST['fullstory'] . "', ";
+        $query .= "summary='" . $_POST['teaser'] . "', ";
+        $query .= "full_text='" . $_POST['fullstory'] . "', ";
         if ($_FILES['image_ul1']['name'] != "" || $_FILES['image_ul2']['name'] != "" || $_FILES['image_ul3']['name'] != "") {
             $query .= "image1 = '" . $_FILES['image_ul1']['name'] . "', ";
             $query .= "image2 = '" . $_FILES['image_ul2']['name'] . "', ";
@@ -124,6 +124,15 @@
         $query .= "source = '" . $_POST['source'] . "'";
         $query .= " WHERE news.id=" . $_POST['_id_'];
         $result = mysqli_query($MySQL, $query);
+
+		header("Refresh: 0; url=index.php?menu=2");
+
+        /* Debug
+		echo 'Query: <br>';
+        echo $query;
+        echo '<br>';
+        echo 'Vijest ID: ' . $_POST['_id_'];
+		*/
         
 	}
 

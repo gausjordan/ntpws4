@@ -57,6 +57,10 @@ header li a:hover {
   transition-duration: 0.3s;
 }
 
+#register select {
+	width: 50%;
+}
+
 main {
 	margin: 0 auto;
 	padding: 0em 2em;
@@ -359,6 +363,10 @@ label {
 
 	.inLineSlika {
 		width: 50%;
+	}
+
+	#register select {
+		width: 100%;
 	}
 
 	nav {
