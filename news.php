@@ -22,7 +22,6 @@
 		$result = @mysqli_query($MySQL, $query);
 	}
 
-
 	$query  = "SELECT news.id, title, summary, firstname, lastname, published, source, image1, approved FROM news INNER JOIN users ON news.author_id=users.id";
     $result = @mysqli_query($MySQL, $query);
 	$row = @mysqli_fetch_array($result, MYSQLI_ASSOC);
